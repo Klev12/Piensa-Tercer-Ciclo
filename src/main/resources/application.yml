@@ -1,0 +1,23 @@
+
+server:
+  port: 8081
+  error:
+    include-message: always
+#Configuracion de spring
+spring:
+  #Configuracion de migracion
+  flyway:
+    enabled: true
+    baselineVersion: 1
+    locations:
+      classpath: db/migration
+    sqlMigrationSuffixes: .sql
+    baselineOnMigrate: true
+    sqlMigrationPrefix: V
+    schemas: public
+
+  datasource:
+    url: jdbc:postgresql://bubble.db.elephantsql.com:5432/vuamgrcy?socketTimeout=3
+    username: vuamgrcy
+    password: NT2tL52UgLOFOBRqi9ovzCwx6FAIKhth
+    driverClassName: org.postgresql.Driver
