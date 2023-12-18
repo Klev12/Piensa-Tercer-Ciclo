@@ -11,14 +11,15 @@ CREATE TABLE IF NOT EXISTS Users(
 CREATE TABLE IF NOT EXISTS device (
     id SERIAL PRIMARY KEY,
     latitude FLOAT NOT NULL,
-    longitude FLOAT NOT NULL
+    longitude FLOAT NOT NULL,
+    timer Date NOT NULL
 );
-CREATE TABLE IF NOT EXISTS Red_point (
+CREATE TABLE IF NOT EXISTS Red_point(
     id SERIAL PRIMARY KEY,
     Latitude FLOAT NOT NULL,
     Longitude FLOAT NOT NULL,
     device_id INT,
-    information VARCHAR(500) NOT NULL
+    information VARCHAR(500) NOT NULL,
     FOREIGN KEY (device_id) REFERENCES device(id)
     );
 

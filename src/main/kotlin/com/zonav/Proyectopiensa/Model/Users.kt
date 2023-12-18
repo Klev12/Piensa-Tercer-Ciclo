@@ -13,6 +13,6 @@ class Users{
     var lastName: String? = null
     var email: String? = null
     var password: String? = null
-    var latitude: Long? = null
-    var longitude: Long?= null
+    var latitude: Double? = null
+    var longitude: Double?= null
 }
