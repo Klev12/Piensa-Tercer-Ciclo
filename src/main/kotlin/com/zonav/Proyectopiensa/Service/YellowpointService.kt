@@ -1,7 +1,7 @@
 package com.zonav.Proyectopiensa.Service
 
-import com.zonav.Proyectopiensa.Model.Users
-import com.zonav.Proyectopiensa.Repository.UsersRepository
+import com.zonav.Proyectopiensa.Model.Yellowpoint
+import com.zonav.Proyectopiensa.Repository.YellowpointRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -9,61 +9,61 @@ import org.springframework.web.server.ResponseStatusException
 
 
 @Service
-class UsersService {
+class YellowpointService {
     @Autowired
-    lateinit var usersRepository: UsersRepository
+    lateinit var yellowpointRepository: YellowpointRepository
 
-    fun list ():List<Users>{
-        return usersRepository.findAll()
+    fun list ():List<Yellowpoint>{
+        return yellowpointRepository.findAll()
     }
-    fun save(users: Users): Users{
-        users.FirstName?.takeIf { it.trim().isNotEmpty() }
+    fun save(yellowPoint: Yellowpoint): Yellowpoint{
+        yellowPoint.information?.takeIf { it.trim().isNotEmpty() }
                 ?: throw Exception("Nombres no debe ser vacio")
+
         try{
-            return usersRepository.save(users)
+            return yellowpointRepository.save(yellowPoint)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun update(users: Users): Users{
+    fun update(yellowPoint: Yellowpoint): Yellowpoint{
         try {
-            usersRepository.findById(users.id)
+            yellowpointRepository.findById(yellowPoint.id)
                     ?: throw Exception("ID no existe")
 
-            return usersRepository.save(users)
+            return yellowpointRepository.save(yellowPoint)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun updateName(users: Users): Users{
+    fun updateName(yellowPoint: Yellowpoint): Yellowpoint{
         try{
-            val response = usersRepository.findById(users.id)
+            val response = yellowpointRepository.findById(yellowPoint.id)
                     ?: throw Exception("ID no existe")
             response.apply {
-                FirstName=users.FirstName //un atributo del modelo
+                information=yellowPoint.information //un atributo del modelo
             }
-            return usersRepository.save(response)
+            return yellowpointRepository.save(response)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun listById (id:Long?):Users?{
-        return usersRepository.findById(id)
+    fun listById (id:Long?):Yellowpoint?{
+        return yellowpointRepository.findById(id)
     }
     fun delete (id: Long?):Boolean?{
         try{
-            val response = usersRepository.findById(id)
+            val response = yellowpointRepository.findById(id)
                     ?: throw Exception("ID no existe")
-            usersRepository.deleteById(id!!)
+            yellowpointRepository.deleteById(id!!)
             return true
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-
 
 }

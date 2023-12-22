@@ -1,69 +1,71 @@
 package com.zonav.Proyectopiensa.Service
 
-import com.zonav.Proyectopiensa.Model.Users
-import com.zonav.Proyectopiensa.Repository.UsersRepository
+import com.zonav.Proyectopiensa.Model.Blackpoint
+import com.zonav.Proyectopiensa.Repository.BlackpointRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
-
 @Service
-class UsersService {
+class BlackpointService {
     @Autowired
-    lateinit var usersRepository: UsersRepository
+    lateinit var blackpointRepository: BlackpointRepository
 
-    fun list ():List<Users>{
-        return usersRepository.findAll()
+    fun list ():List<Blackpoint>{
+        return blackpointRepository.findAll()
     }
-    fun save(users: Users): Users{
-        users.FirstName?.takeIf { it.trim().isNotEmpty() }
+    fun save(blackpoint: Blackpoint): Blackpoint{
+        blackpoint.information?.takeIf { it.trim().isNotEmpty() }
                 ?: throw Exception("Nombres no debe ser vacio")
+
         try{
-            return usersRepository.save(users)
+            return blackpointRepository.save(blackpoint)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun update(users: Users): Users{
+    fun update(blackpoint: Blackpoint): Blackpoint{
         try {
-            usersRepository.findById(users.id)
+            blackpointRepository.findById(blackpoint.id)
                     ?: throw Exception("ID no existe")
 
-            return usersRepository.save(users)
+            return blackpointRepository.save(blackpoint)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun updateName(users: Users): Users{
+    fun updateName(blackpoint: Blackpoint): Blackpoint{
         try{
-            val response = usersRepository.findById(users.id)
+            val response = blackpointRepository.findById(blackpoint.id)
                     ?: throw Exception("ID no existe")
             response.apply {
-                FirstName=users.FirstName //un atributo del modelo
+                information=blackpoint.information
             }
-            return usersRepository.save(response)
+            return blackpointRepository.save(response)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun listById (id:Long?):Users?{
-        return usersRepository.findById(id)
+    fun listById (id:Long?):Blackpoint?{
+        return blackpointRepository.findById(id)
     }
-    fun delete (id: Long?):Boolean?{
+    fun delete(id: Long?):Boolean?{
         try{
-            val response = usersRepository.findById(id)
+            val response = blackpointRepository.findById(id)
                     ?: throw Exception("ID no existe")
-            usersRepository.deleteById(id!!)
+            blackpointRepository.deleteById(id!!)
             return true
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
+
+
 
 
 }
