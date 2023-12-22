@@ -1,68 +1,74 @@
 package com.zonav.Proyectopiensa.Service
 
-import com.zonav.Proyectopiensa.Model.Device
-import com.zonav.Proyectopiensa.Model.Users
+import com.zonav.Proyectopiensa.Model.Redpoint
 import com.zonav.Proyectopiensa.Repository.DeviceRepository
-import com.zonav.Proyectopiensa.Repository.UsersRepository
+import com.zonav.Proyectopiensa.Repository.RedpointRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class DeviceService {
+class RedpointService {
+    @Autowired
+    lateinit var redpointRepository: RedpointRepository
     @Autowired
     lateinit var deviceRepository: DeviceRepository
 
-    fun list ():List<Device>{
-        return deviceRepository.findAll()
-    }
-    fun save(device: Device): Device{
 
+    fun list ():List<Redpoint>{
+        return redpointRepository.findAll()
+    }
+    fun save(redpoint: Redpoint): Redpoint{
+        redpoint.information?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("Nombres no debe ser vacio")
         try{
-            return deviceRepository.save(device)
+            deviceRepository.findById(redpoint.deviceId)
+                    ?: throw Exception("Id del cliente no encontrada")
+            return redpointRepository.save(redpoint)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun update(device: Device): Device{
+    fun update(redpoint: Redpoint): Redpoint{
         try {
-            deviceRepository.findById(device.id)
+            redpointRepository.findById(redpoint.id)
                     ?: throw Exception("ID no existe")
 
-            return deviceRepository.save(device)
+            return redpointRepository.save(redpoint)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun updateName(device: Device):Device{
+    fun updateName(redpoint: Redpoint): Redpoint{
         try{
-            val response = deviceRepository.findById(device.id)
+            val response = redpointRepository.findById(redpoint.id)
                     ?: throw Exception("ID no existe")
             response.apply {
-                timer=device.timer //un atributo del modelo
+                information=redpoint.information //un atributo del modelo
             }
-            return deviceRepository.save(response)
+            return redpointRepository.save(response)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun listById (id:Long?):Device?{
-        return deviceRepository.findById(id)
+    fun listById (id:Long?):Redpoint?{
+        return redpointRepository.findById(id)
     }
     fun delete (id: Long?):Boolean?{
         try{
-            val response = deviceRepository.findById(id)
+            val response = redpointRepository.findById(id)
                     ?: throw Exception("ID no existe")
-            deviceRepository.deleteById(id!!)
+            redpointRepository.deleteById(id!!)
             return true
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
+
 
 }

@@ -3,8 +3,8 @@ package com.zonav.Proyectopiensa.Model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Black_point")
-class Black_point{
+@Table(name = "Blackpoint")
+class Blackpoint{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(updatable = false)
