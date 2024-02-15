@@ -1,8 +1,11 @@
 package com.zonav.Proyectopiensa.Controller
 
-import com.zonav.Proyectopiensa.Model.*
-import com.zonav.Proyectopiensa.Service.*
+import com.zonav.Proyectopiensa.Model.Points
+import com.zonav.Proyectopiensa.Model.Users
+import com.zonav.Proyectopiensa.Service.PointsService
+import com.zonav.Proyectopiensa.Service.UsersService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -17,36 +20,35 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-@RequestMapping("/Red_point")   //endpoint
-class RedpointController {
+@RequestMapping("/Points")   //endpoint
+class PointsController {
     @Autowired
-    lateinit var redpointService: RedpointService
+    lateinit var pointsService: PointsService
 
     @GetMapping
-    fun list ():List <Redpoint>{
-        return redpointService.list()
+    fun list ():List <Points>{
+        return pointsService.list()
     }
     @PostMapping
-    fun save (@RequestBody redpoint: Redpoint):ResponseEntity<Redpoint>{
-        return ResponseEntity(redpointService.save(redpoint), HttpStatus.OK)
+    fun save (@RequestBody points: Points):ResponseEntity<Points>{
+        return ResponseEntity(pointsService.save(points), HttpStatus.OK)
     }
     @PutMapping
-    fun update (@RequestBody redpoint: Redpoint):ResponseEntity<Redpoint>{
-        return ResponseEntity(redpointService.update(redpoint), HttpStatus.OK)
+    fun update (@RequestBody points: Points):ResponseEntity<Points>{
+        return ResponseEntity(pointsService.update(points), HttpStatus.OK)
     }
     @PatchMapping
-    fun updateName (@RequestBody redpoint: Redpoint):ResponseEntity<Redpoint>{
-        return ResponseEntity(redpointService.updateName(redpoint), HttpStatus.OK)
+    fun updateName (@RequestBody points: Points):ResponseEntity<Points>{
+        return ResponseEntity(pointsService.updateName(points), HttpStatus.OK)
     }
     @GetMapping("/{id}")
     fun listById (@PathVariable("id") id: Long): ResponseEntity<*>{
-        return ResponseEntity(redpointService.listById (id), HttpStatus.OK)
+        return ResponseEntity(pointsService.listById (id), HttpStatus.OK)
 
     }
     @DeleteMapping("/delete/{id}")
     fun delete (@PathVariable("id") id: Long):Boolean?{
-        return redpointService.delete(id)
+        return pointsService.delete(id)
     }
-
 
 }
