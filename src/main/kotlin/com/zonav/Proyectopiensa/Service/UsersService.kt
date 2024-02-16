@@ -17,7 +17,7 @@ class UsersService {
         return usersRepository.findAll()
     }
     fun save(users: Users): Users{
-        users.FirstName?.takeIf { it.trim().isNotEmpty() }
+        users.firstName?.takeIf { it.trim().isNotEmpty() }
                 ?: throw Exception("Nombres no debe ser vacio")
         try{
             return usersRepository.save(users)
@@ -42,7 +42,7 @@ class UsersService {
             val response = usersRepository.findById(users.id)
                     ?: throw Exception("ID no existe")
             response.apply {
-                FirstName=users.FirstName //un atributo del modelo
+                firstName=users.firstName //un atributo del modelo
             }
             return usersRepository.save(response)
         }

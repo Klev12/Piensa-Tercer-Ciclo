@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Users(
     id SERIAL PRIMARY KEY,
-    FirstName VARCHAR(200) NOT NULL,
-    lastName VARCHAR(200) NOT NULL,
+    first_Name VARCHAR(200) NOT NULL,
+    last_Name VARCHAR(200) NOT NULL,
     email VARCHAR(100) NOT NULL,
     username VARCHAR(100)NOT NULL,
     password VARCHAR(50)NOT NULL

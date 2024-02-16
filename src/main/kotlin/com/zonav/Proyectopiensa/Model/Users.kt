@@ -9,10 +9,11 @@ class Users{
     @Id
     @Column(updatable = false)
     var id: Long? = null
-    var FirstName: String?= null
+    @Column(name = "first_Name")
+    var firstName: String?= null
+    @Column (name = "last_Name")
     var lastName: String? = null
+    var username: String? = null
     var email: String? = null
     var password: String? = null
-    var latitude: Double? = null
-    var longitude: Double?= null
 }
