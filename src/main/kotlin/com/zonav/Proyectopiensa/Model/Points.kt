@@ -3,7 +3,7 @@ package com.zonav.Proyectopiensa.Model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Device")
+@Table(name = "Points")
 class Points{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
